@@ -9,10 +9,6 @@ on:
   release:
       types: [released]
 
-_defs:
-  env: &publishEnv
-    COMMON_VAL: "meow"
-
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -29,7 +25,8 @@ jobs:
       - name: Publish with Gradle (snapshot)
         if: ${{ github.event_name != 'release' }}
         run: echo "I'm a snapshot! (value is $COMMON_VAL)"
-        env: *publishEnv
+        env: &publishEnv
+          COMMON_VAL: "meow"
       - name: Publish with Gradle (release)
         if: ${{ github.event_name == 'release' }}
         run: echo "I'm a release"
