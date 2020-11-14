@@ -22,8 +22,15 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Run with ${{ github.ref }}
+      - name: "Run with ${{ github.ref }}"
         run: echo "Run with $GITHUB_REF"
+      - name: Push-specific
+        if: ${{ github.event_name != 'release' }}
+        run: 'echo "Is distinct: $SBX_DISTINCT"; echo "All commits: $SBX_COMMITS"'
+        env:
+          SBX_DISTINCT: ${{ github.event.commits[0].distinct}}
+          SBX_COMMITS: ${{ github.event.commits}}
+
       - name: Publish with Gradle (not actually gradle) (snapshot)
         if: ${{ github.event_name != 'release' }}
         run: echo "I'm a snapshot! (value is $COMMON_VAL)"
