@@ -22,12 +22,15 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Publish with Gradle (snapshot)
+      - name: Run with ${{ github.ref }}
+        run: echo "Run with $GITHUB_REF"
+      - name: Publish with Gradle (not actually gradle) (snapshot)
         if: ${{ github.event_name != 'release' }}
         run: echo "I'm a snapshot! (value is $COMMON_VAL)"
-        env: &publishEnv
+        env:
           COMMON_VAL: "meow"
-      - name: Publish with Gradle (release)
+      - name: Publish with Gradle (not actually gradle) (release)
         if: ${{ github.event_name == 'release' }}
-        run: echo "I'm a release"
-        env: *publishEnv
+        run: echo "I'm a release (value is $COMMON_VAL)"
+        env:
+          COMMON_VAL: "meow"
